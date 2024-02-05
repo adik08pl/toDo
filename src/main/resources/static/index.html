@@ -6,11 +6,11 @@
 </head>
 <body>
 <form id="form">
-    <input type="text" name="title" placeholder="Nazwa:">
-    <input type="text" name="author" placeholder="Opis:">
-    <input type="text" name="year" placeholder="Termin:">
+    <input type="text" name="name" placeholder="Nazwa:">
+    <input type="text" name="description" placeholder="Opis:">
+    <input type="date" name="deadline" placeholder="Termin:">
     <button id="btn">Wyślij</button>
-    <button id="btn2">Wyślij2</button>
+    <button id="btn2">Wyświetl</button>
     <div id="answer"></div>
 </form>
 <script>
@@ -19,11 +19,17 @@ const div = document.getElementById('answer');
  document.getElementById('btn').addEventListener('click', (event) => {
 event.preventDefault();
 const formObj = {
- title: form.elements.title.value,
- author: form.elements.author.value,
- year: form.elements.year.value
+ name: form.elements.name.value,
+ description: form.elements.description.value,
+ deadline: form.elements.deadline.value
  };
-fetch('/add?' + new URLSearchParams(formObj))
+fetch('/add', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formObj),
+    })
  .then(response => response.text())
  .then((text) => {
  div.innerHTML += `<h1>${text}</h1>`;
@@ -34,7 +40,7 @@ event.preventDefault();
 fetch('/show?' + new URLSearchParams())
  .then(response => response.text())
  .then((text) => {
- div.innerHTML += `<h1>${text}</h1>`;
+ div.innerHTML = `<h1>${text}</h1>`;
  });
  });
 </script>
