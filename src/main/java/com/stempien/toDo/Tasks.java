@@ -7,7 +7,6 @@ import jakarta.persistence.Id;
 
 import java.time.LocalDate;
 
-// Hermetyzacja + Lombok
 @Entity
 public class Tasks {
     @Id

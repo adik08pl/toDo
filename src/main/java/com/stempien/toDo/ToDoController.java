@@ -22,4 +22,10 @@ class ToDoController {
     void addTask(@RequestBody NewTask newTask){
         toDoService.addTask(newTask.getName(), newTask.getDescription(), newTask.getDeadline());
     }
+
+    @GetMapping("/show")
+    @ResponseBody()
+    String getOneTasks(@RequestParam int id){
+        return toDoService.getOne(id);
+    }
 }

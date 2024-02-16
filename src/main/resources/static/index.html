@@ -2,15 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Email</title>
+    <title>ToDo</title>
 </head>
 <body>
 <form id="form">
     <input type="text" name="name" placeholder="Nazwa:">
     <input type="text" name="description" placeholder="Opis:">
     <input type="date" name="deadline" placeholder="Termin:">
+    <input type="number" name="id" placeholder="Id:">
     <button id="btn">Wyślij</button>
     <button id="btn2">Wyświetl</button>
+    <button id="btn3">Wyświetl po id</button>
     <div id="answer"></div>
 </form>
 <script>
@@ -38,6 +40,17 @@ fetch('/add', {
   document.getElementById('btn2').addEventListener('click', (event) => {
 event.preventDefault();
 fetch('/show?' + new URLSearchParams())
+ .then(response => response.text())
+ .then((text) => {
+ div.innerHTML = `<h1>${text}</h1>`;
+ });
+ });
+  document.getElementById('btn3').addEventListener('click', (event) => {
+event.preventDefault();
+const formObj2 = {
+ id: form.elements.id.value
+ };
+fetch('/getOne?' + new URLSearchParams(formObj2))
  .then(response => response.text())
  .then((text) => {
  div.innerHTML = `<h1>${text}</h1>`;

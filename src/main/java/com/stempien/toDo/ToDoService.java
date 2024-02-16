@@ -12,7 +12,6 @@ class ToDoService {
     @Value("${max}")
     private Integer max;
 
-
     private final TaskRepository taskRepository;
 
     ToDoService(TaskRepository taskRepository) {
@@ -24,6 +23,14 @@ class ToDoService {
         List<Tasks> answer = (List<Tasks>) taskRepository.findAll();
 
        return answer.stream()
+                .map(elem -> String.format("%s %s do wykonania do %s", elem.name, elem.description, elem.deadline))
+                .collect(Collectors.joining("<br>"));
+    }
+
+    String getOne(int id){
+        List<Tasks> answer = taskRepository.znajdzZadania(id);
+
+        return  answer.stream()
                 .map(elem -> String.format("%s %s do wykonania do %s", elem.name, elem.description, elem.deadline))
                 .collect(Collectors.joining("<br>"));
     }
